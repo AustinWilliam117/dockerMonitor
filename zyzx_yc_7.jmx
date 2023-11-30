@@ -1,0 +1,1068 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.1">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="测试计划" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="中移在线—线程组" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">1</stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="IP" elementType="Argument">
+              <stringProp name="Argument.name">IP</stringProp>
+              <stringProp name="Argument.value">10.54.0.30</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">pbot/DMService/api/v2/parser</stringProp>
+            </elementProp>
+            <elementProp name="URL" elementType="Argument">
+              <stringProp name="Argument.name">URL</stringProp>
+              <stringProp name="Argument.value">pbot/gray-sc/crs</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">http://10.54.0.30:19842/pbot/gray-sc/crs</stringProp>
+            </elementProp>
+            <elementProp name="PORT" elementType="Argument">
+              <stringProp name="Argument.name">PORT</stringProp>
+              <stringProp name="Argument.value">19843</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">9090</stringProp>
+            </elementProp>
+            <elementProp name="province" elementType="Argument">
+              <stringProp name="Argument.name">province</stringProp>
+              <stringProp name="Argument.value">100</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="entrance_id" elementType="Argument">
+              <stringProp name="Argument.name">entrance_id</stringProp>
+              <stringProp name="Argument.value">098</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="用户参数" enabled="true">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="1734604962">endingId</stringProp>
+            <stringProp name="1984383537">callStates1</stringProp>
+            <stringProp name="1984383538">callStates2</stringProp>
+            <stringProp name="1984383539">callStates3</stringProp>
+            <stringProp name="1984383540">callStates4</stringProp>
+            <stringProp name="1984383541">callStates5</stringProp>
+            <stringProp name="1984383542">callStates6</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="-2112413934">
+              <stringProp name="187832203">${__UUID}</stringProp>
+              <stringProp name="842975853">正常挂机</stringProp>
+              <stringProp name="747281959">强制挂断</stringProp>
+              <stringProp name="1329822726">识别错误挂断</stringProp>
+              <stringProp name="727264243">对方拒接</stringProp>
+              <stringProp name="-97699040">超时未接听</stringProp>
+              <stringProp name="1105194313">超时挂机</stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">true</boolProp>
+        </UserParameters>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="endingId" enabled="false">
+          <stringProp name="filename">C:\Users\William\Desktop\ending_Id.txt</stringProp>
+          <stringProp name="fileEncoding">UTF-8</stringProp>
+          <stringProp name="variableNames">endingId</stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+          <stringProp name="delimiter">,</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.group</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="callStatus" enabled="false">
+          <stringProp name="filename">C:\Users\William\Desktop\callStates.txt</stringProp>
+          <stringProp name="fileEncoding">UTF-8</stringProp>
+          <stringProp name="variableNames">callStatus</stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+          <stringProp name="delimiter">,</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.group</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="生成手机号" enabled="true">
+          <stringProp name="BeanShellSampler.query">String[] FirstThreeNumber = {&quot;134&quot;,&quot;135&quot;,&quot;136&quot;,&quot;137&quot;,&quot;138&quot;,&quot;139&quot;,&quot;147&quot;,&quot;150&quot;,&quot;152&quot;,&quot;157&quot;,&quot;158&quot;,&quot;159&quot;,&quot;172&quot;,&quot;178&quot;,&quot;182&quot;,&quot;183&quot;,&quot;184&quot;,&quot;187&quot;,&quot;188&quot;,&quot;198&quot;,&quot;130&quot;,&quot;131&quot;,&quot;132&quot;,&quot;145&quot;,&quot;155&quot;,&quot;156&quot;,&quot;166&quot;,&quot;171&quot;,&quot;175&quot;,&quot;176&quot;,&quot;185&quot;,&quot;186&quot;,&quot;166&quot;,&quot;133&quot;,&quot;149&quot;,&quot;153&quot;,&quot;173&quot;,&quot;177&quot;,&quot;180&quot;,&quot;181&quot;,&quot;189&quot;,&quot;199&quot;};
+
+//随机获取前三位手机号的index
+
+int n= (int)(Math.random() * FirstThreeNumber.length);
+
+//获取手机前三位
+
+String yy = FirstThreeNumber[n];
+
+//循环获取手机号后8位
+
+for(int i = 0; i &lt; 8; i++){
+
+    int x = (int)(Math.random() * 9);
+
+    yy = yy + x;
+
+};
+
+vars.put(&quot;phone&quot;, yy);</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="answerCall" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+	&quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+	&quot;task_id&quot;: 1,&#xd;
+	&quot;sample_id&quot;: &quot;1&quot;,&#xd;
+	&quot;inaction&quot;: &quot;8&quot;,&#xd;
+	&quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+	&quot;inparams&quot;: {&#xd;
+		&quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+		&quot;call_sor_id&quot;: &quot;10086&quot;,&#xd;
+		&quot;call_dst_id&quot;: &quot;${phone}&quot;,&#xd;
+		&quot;suilu_region_id&quot;: &quot;sc&quot;,&#xd;
+		&quot;region_id&quot;: &quot;sc&quot;,&#xd;
+		&quot;start_time&quot;: &quot;${__time(YYYYMMddHH:MM:ss,)}&quot;,&#xd;
+		&quot;flow&quot;: &quot;root.xml&quot;,&#xd;
+		&quot;entrance_id&quot;: &quot;${entrance_id}&quot;,&#xd;
+		&quot;auth_token&quot;: &quot;1&quot;&#xd;
+	}&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="playover" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+  &quot;task_id&quot;: 1,&#xd;
+  &quot;inaction&quot;: 9,&#xd;
+  &quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+  &quot;inparams&quot;: {&#xd;
+    &quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+    &quot;inter_idx&quot;: 1,&#xd;
+    &quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,)}&quot;,&#xd;
+    &quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+    &quot;input&quot;: &quot;playover&quot;,&#xd;
+    &quot;inter_no&quot;: &quot;123456789&quot;,&#xd;
+    &quot;org&quot;: &quot;1&quot;,&#xd;
+    &quot;newsess&quot;: &quot;0&quot;,&#xd;
+    &quot;session_id&quot;: &quot;123445465&quot;,&#xd;
+    &quot;commu_id&quot;: &quot;123445465&quot;&#xd;
+  }&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="false">
+            <stringProp name="ConstantTimer.delay">5000</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="方便" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+  &quot;task_id&quot;: 1,&#xd;
+  &quot;inaction&quot;: 9,&#xd;
+  &quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+  &quot;inparams&quot;: {&#xd;
+    &quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+    &quot;inter_idx&quot;: 2,&#xd;
+    &quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,)}&quot;,&#xd;
+    &quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+    &quot;input&quot;: &quot;12345678#方便&quot;,&#xd;
+    &quot;inter_no&quot;: &quot;12345678&quot;,&#xd;
+    &quot;org&quot;: &quot;1&quot;,&#xd;
+    &quot;newsess&quot;: &quot;0&quot;,&#xd;
+    &quot;session_id&quot;: &quot;123644545&quot;,&#xd;
+    &quot;commu_id&quot;: &quot;123644545&quot;&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="false">
+            <stringProp name="ConstantTimer.delay">5000</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="playover" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+  &quot;task_id&quot;: 1,&#xd;
+  &quot;inaction&quot;: 9,&#xd;
+  &quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+  &quot;inparams&quot;: {&#xd;
+    &quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+    &quot;inter_idx&quot;: 3,&#xd;
+    &quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,)}&quot;,&#xd;
+    &quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+    &quot;input&quot;: &quot;playover&quot;,&#xd;
+    &quot;inter_no&quot;: &quot;123456789&quot;,&#xd;
+    &quot;org&quot;: &quot;1&quot;,&#xd;
+    &quot;newsess&quot;: &quot;0&quot;,&#xd;
+    &quot;session_id&quot;: &quot;123445465&quot;,&#xd;
+    &quot;commu_id&quot;: &quot;123445465&quot;&#xd;
+  }&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="false">
+            <stringProp name="ConstantTimer.delay">5000</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="是的" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+  &quot;task_id&quot;: 1,&#xd;
+  &quot;inaction&quot;: 9,&#xd;
+  &quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+  &quot;inparams&quot;: {&#xd;
+    &quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+    &quot;inter_idx&quot;: 4,&#xd;
+    &quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss:ss,)}&quot;,&#xd;
+    &quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+    &quot;input&quot;: &quot;12345627#是的&quot;,&#xd;
+    &quot;inter_no&quot;: &quot;12345627&quot;,&#xd;
+    &quot;org&quot;: &quot;1&quot;,&#xd;
+    &quot;newsess&quot;: &quot;0&quot;,&#xd;
+    &quot;session_id&quot;: &quot;122344545&quot;,&#xd;
+    &quot;commu_id&quot;: &quot;122344545&quot;&#xd;
+  }&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="false">
+            <stringProp name="ConstantTimer.delay">5000</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="playover" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+  &quot;task_id&quot;: 1,&#xd;
+  &quot;inaction&quot;: 9,&#xd;
+  &quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+  &quot;inparams&quot;: {&#xd;
+    &quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+    &quot;inter_idx&quot;: 5,&#xd;
+    &quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss:ss,)}&quot;,&#xd;
+    &quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+    &quot;input&quot;: &quot;playover&quot;,&#xd;
+    &quot;inter_no&quot;: &quot;12345627&quot;,&#xd;
+    &quot;org&quot;: &quot;1&quot;,&#xd;
+    &quot;newsess&quot;: &quot;0&quot;,&#xd;
+    &quot;session_id&quot;: &quot;122344545&quot;,&#xd;
+    &quot;commu_id&quot;: &quot;122344545&quot;&#xd;
+  }&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="false">
+            <stringProp name="ConstantTimer.delay">5000</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="3分" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+  &quot;task_id&quot;: 1,&#xd;
+  &quot;inaction&quot;: 9,&#xd;
+  &quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+  &quot;inparams&quot;: {&#xd;
+    &quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+    &quot;inter_idx&quot;: 6,&#xd;
+    &quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,)}&quot;,&#xd;
+    &quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+    &quot;input&quot;: &quot;12345677#3分&quot;,&#xd;
+    &quot;inter_no&quot;: &quot;12345677&quot;,&#xd;
+    &quot;org&quot;: &quot;1&quot;,&#xd;
+    &quot;newsess&quot;: &quot;0&quot;,&#xd;
+    &quot;session_id&quot;: &quot;123474545&quot;,&#xd;
+    &quot;commu_id&quot;: &quot;123474545&quot;&#xd;
+  }&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="playover" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+  &quot;task_id&quot;: 1,&#xd;
+  &quot;inaction&quot;: 9,&#xd;
+  &quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+  &quot;inparams&quot;: {&#xd;
+    &quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+    &quot;inter_idx&quot;: 7,&#xd;
+    &quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,)}&quot;,&#xd;
+    &quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+    &quot;input&quot;: &quot;playover&quot;,&#xd;
+    &quot;inter_no&quot;: &quot;12345677&quot;,&#xd;
+    &quot;org&quot;: &quot;1&quot;,&#xd;
+    &quot;newsess&quot;: &quot;0&quot;,&#xd;
+    &quot;session_id&quot;: &quot;123474545&quot;,&#xd;
+    &quot;commu_id&quot;: &quot;123474545&quot;&#xd;
+  }&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="4分" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+  &quot;task_id&quot;: 1,&#xd;
+  &quot;inaction&quot;: 9,&#xd;
+  &quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+  &quot;inparams&quot;: {&#xd;
+    &quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+    &quot;inter_idx&quot;: 8,&#xd;
+    &quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,)}&quot;,&#xd;
+    &quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+    &quot;input&quot;: &quot;12345677#4分&quot;,&#xd;
+    &quot;inter_no&quot;: &quot;12345677&quot;,&#xd;
+    &quot;org&quot;: &quot;1&quot;,&#xd;
+    &quot;newsess&quot;: &quot;0&quot;,&#xd;
+    &quot;session_id&quot;: &quot;123474545&quot;,&#xd;
+    &quot;commu_id&quot;: &quot;123474545&quot;&#xd;
+  }&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="playover" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+  &quot;task_id&quot;: 1,&#xd;
+  &quot;inaction&quot;: 9,&#xd;
+  &quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+  &quot;inparams&quot;: {&#xd;
+    &quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+    &quot;inter_idx&quot;: 9,&#xd;
+    &quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,)}&quot;,&#xd;
+    &quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+    &quot;input&quot;: &quot;playover&quot;,&#xd;
+    &quot;inter_no&quot;: &quot;12345677&quot;,&#xd;
+    &quot;org&quot;: &quot;1&quot;,&#xd;
+    &quot;newsess&quot;: &quot;0&quot;,&#xd;
+    &quot;session_id&quot;: &quot;123474545&quot;,&#xd;
+    &quot;commu_id&quot;: &quot;123474545&quot;&#xd;
+  }&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="1分" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+  &quot;task_id&quot;: 1,&#xd;
+  &quot;inaction&quot;: 9,&#xd;
+  &quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+  &quot;inparams&quot;: {&#xd;
+    &quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+    &quot;inter_idx&quot;: 10,&#xd;
+    &quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,)}&quot;,&#xd;
+    &quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+    &quot;input&quot;: &quot;12345677#1分&quot;,&#xd;
+    &quot;inter_no&quot;: &quot;12345677&quot;,&#xd;
+    &quot;org&quot;: &quot;1&quot;,&#xd;
+    &quot;newsess&quot;: &quot;0&quot;,&#xd;
+    &quot;session_id&quot;: &quot;123474545&quot;,&#xd;
+    &quot;commu_id&quot;: &quot;123474545&quot;&#xd;
+  }&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="playover" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+  &quot;task_id&quot;: 1,&#xd;
+  &quot;inaction&quot;: 9,&#xd;
+  &quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+  &quot;inparams&quot;: {&#xd;
+    &quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+    &quot;inter_idx&quot;: 11,&#xd;
+    &quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,)}&quot;,&#xd;
+    &quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+    &quot;input&quot;: &quot;playover&quot;,&#xd;
+    &quot;inter_no&quot;: &quot;12345677&quot;,&#xd;
+    &quot;org&quot;: &quot;1&quot;,&#xd;
+    &quot;newsess&quot;: &quot;0&quot;,&#xd;
+    &quot;session_id&quot;: &quot;123474545&quot;,&#xd;
+    &quot;commu_id&quot;: &quot;123474545&quot;&#xd;
+  }&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="5分" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+  &quot;task_id&quot;: 1,&#xd;
+  &quot;inaction&quot;: 9,&#xd;
+  &quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+  &quot;inparams&quot;: {&#xd;
+    &quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+    &quot;inter_idx&quot;: 12,&#xd;
+    &quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,)}&quot;,&#xd;
+    &quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+    &quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+    &quot;input&quot;: &quot;12345677#5分&quot;,&#xd;
+    &quot;inter_no&quot;: &quot;12345677&quot;,&#xd;
+    &quot;org&quot;: &quot;1&quot;,&#xd;
+    &quot;newsess&quot;: &quot;0&quot;,&#xd;
+    &quot;session_id&quot;: &quot;123474545&quot;,&#xd;
+    &quot;commu_id&quot;: &quot;123474545&quot;&#xd;
+  }&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="End" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+	&quot;userid&quot;: &quot;${endingId}&quot;,&#xd;
+	&quot;inaction&quot;: 9,&#xd;
+	&quot;prov_id&quot;: &quot;${province}&quot;,&#xd;
+	&quot;inparams&quot;: {&#xd;
+		&quot;call_id&quot;: &quot;${endingId}&quot;,&#xd;
+		&quot;inter_idx&quot;: 13,&#xd;
+		&quot;begin_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,)}&quot;,&#xd;
+		&quot;end_play&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+		&quot;result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+		&quot;flow_result_time&quot;: &quot;${__time(YYYY-MM-dd HH:MM:ss,PT2M)}&quot;,&#xd;
+		&quot;flow_result_type&quot;: &quot;1&quot;,&#xd;
+		&quot;input&quot;: &quot;hangup&quot;,&#xd;
+		&quot;inter_no&quot;: &quot;1234567890&quot;,&#xd;
+		&quot;org&quot;: &quot;0&quot;,&#xd;
+		&quot;newsess&quot;: &quot;1&quot;,&#xd;
+		&quot;session_id&quot;: &quot;11111111&quot;,&#xd;
+		&quot;commu_id&quot;: &quot;11111111&quot;&#xd;
+	}&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${IP}</stringProp>
+          <stringProp name="HTTPSampler.port">${PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${URL}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="false">
+            <stringProp name="ConstantTimer.delay">5000</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-824124103">&quot;ret&quot;:0</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="察看结果树" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="聚合报告" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
