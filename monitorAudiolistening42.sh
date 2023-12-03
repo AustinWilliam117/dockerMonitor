@@ -9,7 +9,9 @@ jmeterFile=zyzx_yc_7.jmx                                #jmeter文件
 #jmeterFile=zyzx_audio_nlp1.jmx                         #jmeter文件
 
 thread=(20)                                             #并发数
-#thread=(8)                                             #并发数
+cross_day=y                                             #是否跨天
+# 获取跨天当前日期
+cross_time=`date "+%Y%m%d"`
 
 stressProt=19843                                        #压测端口 9800/9802 为单小程序, 9090为多实例
 
@@ -57,6 +59,42 @@ jmeterStartPath=$jmeterPath/apache-jmeter-5.5/bin
 # 注意：小程序连接数需要监控多个进程，目前只能主动填写
 # python打印的并发数是一个占位值，可以填写真实的值
 #-----------------配置项-----------------
+
+# 用于跨天的数解压和统计。需要三个参数$1,$2 分别为日志路径、跨天时间、解压方式
+untar() {
+    # 解压响应日志
+    #unzip -d $AUDIOlog_path/al_dm_${cross_time} $AUDIOlog_path/al_dm_${cross_time}_1.log.zip
+    #gzip -d $smsLogPath/${cross_time}/* 
+
+    # 如果是小程序就用 unzip 解压， 如果是短信和推送就用 gzip 解压
+    if [ "$3" == "unzip" ]; then
+        # 解压入库日志
+        unzip -d $1/al_dm_${2} $1/al_db_dm_${2}_1.log.zip
+        unzip -d $1/al_dm_${2} $1/al_db_dm_${2}_1.log.zip
+    elif [ "$3" == "gzip" ]; then
+        gzip -d $1/${2}/* 
+        gzip -d $1/${2}/*
+    else
+        echo "输入的解压类型有误，脚本退出"
+        exit 1
+}
+
+# 用于跨天的和统计。需要三个参数$1,$2,$3 分别为日志路径、跨天时间、入库字段
+statistics() {
+    # 统计小程序入库数量
+    # echo -n "$AUDIOlog_path/${cross_time}/logs/$i 路径下错误数量为" && cat $AUDIOlog_path/${cross_time}/$i | grep "ERROR" | wc -l
+
+    for i in `ls $1/al_dm_${2}`; do
+        echo -n "$1/${2}/logs/$i 路径下错误数量为" && cat $1/${2}/$i | grep "ERROR" | wc -l
+        echo ""
+        echo -n "$1/${2}/logs/$i 路径下入库数量为" && cat $1/${2}/$i | grep "${3}" | wc -l
+        echo ""
+    done
+}
+
+
+
+
 
 for i in ${!thread[@]}
 do
@@ -255,6 +293,75 @@ do
 
         echo "压测中会出现超时入库问题，所以等待5分钟后出统计数量"
         sleep 2m
+
+        # 判断是否跨天，如果跨天了解压前一天的日志并统计
+        if [ "$cross_day" == "y" ]
+        then
+                # 解压小程序前，注意日志大小一定要设置100G以上
+                midir $AUDIOlog_path/al_dm_${cross_time}
+                midir $AUDIO1log_path/al_dm_${cross_time}
+                # 解压响应日志
+                unzip -d $AUDIOlog_path/al_dm_${cross_time} $AUDIOlog_path/al_dm_${cross_time}_1.log.zip
+                unzip -d $AUDIO1log_path/al_dm_${cross_time} $AUDIOlog_path/al_dm_${cross_time}_1.log.zip
+
+                # 解压入库日志
+                unzip -d $AUDIOlog_path/al_dm_${cross_time} $AUDIOlog_path/al_db_dm_${cross_time}_1.log.zip
+                unzip -d $AUDIO1log_path/al_dm_${cross_time} $AUDIOlog_path/al_db_dm_${cross_time}_1.log.zip
+
+                # 统计小程序入库数量
+                for i in `ls $AUDIOlog_path/al_dm_${cross_time}`; do
+                    echo -n "$AUDIOlog_path/${cross_time}/logs/$i 路径下错误数量为" && cat $AUDIOlog_path/${cross_time}/$i | grep "ERROR" | wc -l
+                    echo ""
+                    echo -n "$AUDIOlog_path/${cross_time}/logs/$i 路径下入库数量为" && cat $AUDIOlog_path/${cross_time}/$i | grep "短信发送成功" | wc -l
+                    echo ""
+                done
+
+                for i in `ls $AUDIO1log_path/al_dm_${cross_time}`; do
+                    echo -n "$AUDIO1log_path/${cross_time}/logs/$i 路径下错误数量为" && cat $AUDIO1log_path/${cross_time}/$i | grep "ERROR" | wc -l
+                    echo ""
+                    echo -n "$AUDIO1log_path/${cross_time}/logs/$i 路径下入库数量为" && cat $AUDIO1log_path/${cross_time}/$i | grep "短信发送成功" | wc -l
+                    echo ""
+                done
+
+                # 解压短信前，日志大小一定要设置100G以上
+                gzip -d $smsLogPath/${cross_time}/* 
+                gzip -d $sms_1_LogPath/${cross_time}/*
+
+                # 统计短信入库数量 和 是否有 Error
+                for i in `ls $smsLogPath/${cross_time}`; do
+                    echo -n "$smsLogPath/${cross_time}/$i 路径下错误数量为" && cat $smsLogPath/${cross_time}/$i | grep "ERROR" | wc -l
+                    echo ""
+                    echo -n "$smsLogPath/${cross_time}/$i 路径下入库数量为" && cat $smsLogPath/${cross_time}/$i | grep "短信发送成功" | wc -l
+                    echo ""
+                done
+
+                for i in `ls $sms_1_LogPath/${cross_time}`; do
+                    echo -n "$sms_1_LogPath/${cross_time}/$i 路径下错误数量为" && cat $sms_1_LogPath/${cross_time}/$i | grep "ERROR" | wc -l
+                    echo ""
+                    echo -n "$sms_1_LogPath/${cross_time}/$i 路径下入库数量为" && cat $sms_1_LogPath/${cross_time}/$i | grep "短信发送成功" | wc -l
+                    echo ""
+                done
+
+                # 解压计费上传前，日志大小一定要设置100G以上
+                gzip -d $pushKafkaLogPath/${cross_time}/* 
+                gzip -d $pushKafka_1_LogPath/${cross_time}/*
+
+                # 统计计费入库数量
+                for i in `ls $pushKafkaLogPath/${cross_time}`; do
+                    echo -n "$pushKafkaLogPath/${cross_time}/$i 路径下错误数量为" && cat $pushKafkaLogPath/${cross_time}/$i | grep "ERROR" | wc -l
+                    echo ""
+                    echo -n "$pushKafkaLogPath/${cross_time}/$i 路径下入库数量为" && cat $pushKafkaLogPath/${cross_time}/$i | grep "推送callId" | wc -l
+                    echo ""
+                done
+
+                for i in `ls $pushKafka_1_LogPath/${cross_time}`; do
+                    echo -n "$pushKafka_1_LogPath/${cross_time}/$i 路径下错误数量为" && cat $pushKafka_1_LogPath/${cross_time}/$i | grep "ERROR" | wc -l
+                    echo ""
+                    echo -n "$pushKafka_1_LogPath/${cross_time}/$i 路径下入库数量为" && cat $pushKafka_1_LogPath/${cross_time}/$i | grep "推送callId" | wc -l
+                    echo ""
+                done
+
+        fi
 
         #cp $AUDIOlog_path/al_push_dm.log $AUDIOlog_path/al_push_dm.log_{$current_time}
         cp $AUDIOlog_path/al_db_dm.log $AUDIOlog_path/al_db_dm.log_{$current_time}_bak
