@@ -8,15 +8,15 @@
 jmeterFile=zyzx_yc_7.jmx                    #jmeter文件
 #jmeterFile=zyzx_audio_nlp1.jmx             #jmeter文件
 
-thread=(16)                        #并发数
-#thread=(8)                        #并发数
+thread=(4)                                 #并发数
+#thread=(8)                                 #并发数
 
-stressProt=9090                    #压测端口 9800/9802 为单小程序, 9090为多实例
+stressProt=9090                             #压测端口 9800/9802 为单小程序, 9090为多实例
 
 # 43200=12小时，21600=6小时，86400=24小时，259200=3天，14400=4小时
-duration=300                    #循环持续时间（该版本为永久循环版本）
+duration=120                                #循环持续时间（该版本为永久循环版本）
 
-ramp_time=1                        #花费多久的时间启动全部的线程
+ramp_time=1                                 #花费多久的时间启动全部的线程
 
 # 小程序端口号
 #Ports=(9800 9802 9002 9001 19248 29001 29002 19249)
@@ -31,6 +31,7 @@ monitorCalc=$jmeterPath/monitorTool
 # 小程序日志路径
 AUDIOlog_path=$basePath/audiolistening_arm/logs
 AUDIO1log_path=$basePath/audiolistening_arm/audio_1/logs
+AUDIO2log_path=$basePath/audiolistening_arm/audio_2/logs
 
 # 短信日志路径
 smsLogPath=$basePath/sms-management/logs
@@ -78,65 +79,6 @@ log_statistics() {
         #return $countNum
     fi
 }
-
-# 用于跨天的数解压和统计。需要三个参数$1,$2,$3（选填） 分别为跨天时间例如：20231201、解压方式，短信或者推送（选填）
-untar() {
-    # 解压响应日志
-    #unzip -d $AUDIOlog_path/al_dm_${cross_time} $AUDIOlog_path/al_dm_${cross_time}_1.log.zip
-    #gzip -d $smsLogPath/${cross_time}/* 
-
-    # 如果是小程序就用 unzip 解压， 如果是短信和推送就用 gzip 解压
-    if [ "$2" == "unzip" ]; then
-        # 先判断文件是否存在
-        if [ -e "${audioLogArray[0]}/al_dm_${1}_1.log.zip" ] && [ -e "${audioLogArray[0]}/al_dm_${1}_1.log.zip" ]; then
-        # 解压之前先创建目录
-            for dir in ${audioLogArray[@]}
-            do
-                # midir $AUDIOlog_path/al_dm_${cross_time}
-                mkdir -p $dir/untar/al_dm_${1} $dir/untar/al_db_dm_${1}
-                # 解压入库日志
-                unzip -d $dir/untar/al_dm_${1} $dir/al_dm_${1}_1.log.zip
-                # 往往压缩包比较大，所以多等一会
-                sleep 30s
-                unzip -d $dir/untar/al_db_dm_${1} $dir/al_db_dm_${1}_1.log.zip
-                sleep 30s
-            done
-        else
-            echo "${audioLogArray[0]}/al_dm_${1}_1.log.zip 或者 ${audioLogArray[0]}/al_dm_${1}_1.log.zip 不存在"
-        fi
-
-    # 解压短信或者推送
-    elif [ "$2" == "gzip" ]; then
-        if [ "$3" == "sms" ]; then
-            if [ -d "${smsLogArray[0]}/${1}" ]; then
-                for dir in ${smsLogArray[@]}
-                do
-                    gzip -d $dir/${1}/*
-                    sleep 30s
-                done
-            else
-                echo "${smsLogArray[0]}/${1} 没有该目录"
-            fi
-        elif [ "$3" == "push" ]; then
-            if [ -d "${pushKafkaLogArray[0]}/${1}" ]; then
-                for dir in ${pushKafkaLogArray[@]}
-                do
-                    gzip -d $dir/${1}/*
-                    sleep 30s
-                done
-            else
-                echo "${pushKafkaLogArray[0]}/${1} 没有该目录"
-            fi
-        else
-            echo "输入的服务名称有误，脚本退出"
-            exit 1
-        fi
-    else
-        echo "输入的解压类型有误，脚本退出"
-        exit 1
-    fi
-}
-
 
 # 小程序日志
 # countNum=0
@@ -204,15 +146,17 @@ logPrintPushAndSms() {
     # 上传计费 push_kafka 日志
     local countNum=0
     local audioNum=0
+    # 仅接收第三个参数到最后一个参数。如果仅接收从第一个到倒数第二个参数为LogArray=("${@:1:$#-1}")
+    local LogArray=("${@:3}")
     # local logPathAndName="${pushKafkaLogArray[$path]}/push-kafka.log"
     # local statisticsStorage=y
     # local statisticsKeyWords="推送callId"
-    local logPathAndName="${pushKafkaLogArray[$path]}/${1}"
-    local statisticsStorage=y
-    local statisticsKeyWords="${2}"
 
-    for path in ${!pushKafkaLogArray[@]}
+    for path in ${!LogArray[@]}
     do
+        local logPathAndName="${LogArray[$path]}/${1}"
+        local statisticsStorage=y
+        local statisticsKeyWords="${2}"
         log_statistics $logPathAndName $statisticsStorage $statisticsKeyWords
     
         audioNum=$((audioNum + countNum))
@@ -221,6 +165,102 @@ logPrintPushAndSms() {
     echo "总数量是：$audioNum"
     echo ""
 }
+
+# 用于跨天的数解压和统计。需要三个参数$1,$2,$3（选填） 分别为跨天时间例如：20231201、解压方式，短信或者推送（选填）
+untar() {
+    # 解压响应日志
+    #unzip -d $AUDIOlog_path/al_dm_${cross_time} $AUDIOlog_path/al_dm_${cross_time}_1.log.zip
+    #gzip -d $smsLogPath/${cross_time}/* 
+
+    # 如果是小程序就用 unzip 解压， 如果是短信和推送就用 gzip 解压
+    if [ "$2" == "unzip" ]; then
+        # 先判断文件是否存在
+        if [ -e "${audioLogArray[0]}/al_dm_${1}_1.log.zip" ] && [ -e "${audioLogArray[0]}/al_dm_${1}_1.log.zip" ]; then
+            
+            for dir in ${audioLogArray[@]}
+            do
+                # 解压之前先创建目录
+                # midir $AUDIOlog_path/al_dm_${cross_time}
+                mkdir -p $dir/untar/al_dm_${1} $dir/untar/al_db_dm_${1}
+                # 解压入库日志
+                unzip -d $dir/untar/al_dm_${1} $dir/al_dm_${1}_1.log.zip
+                # 往往压缩包比较大，所以多等一会
+                sleep 30s
+                unzip -d $dir/untar/al_db_dm_${1} $dir/al_db_dm_${1}_1.log.zip
+                sleep 30s
+            done
+            echo ""
+            echo "-----------打印${beforeTime}小程序日志开始-----------"
+            echo ""
+            # 统计前一天日志
+            untarPathADBM="untar/al_db_dm_${beforeTime}/logs/al_db_dm_${beforeTime}_1.log"
+            untarPathDM="untar/al_dm_${beforeTime}/logs/al_dm_${beforeTime}_1.log"
+            logPrintAudio $untarPathADBM $untarPathDM
+            echo ""
+            echo "-----------打印${beforeTime}小程序日志结束-----------"
+            echo ""
+
+        else
+            echo "${audioLogArray[0]}/al_dm_${1}_1.log.zip 或者 ${audioLogArray[0]}/al_dm_${1}_1.log.zip 不存在"
+        fi
+
+    # 解压短信或者推送
+    elif [ "$2" == "gzip" ]; then
+        if [ "$3" == "sms" ]; then
+            if [ -d "${smsLogArray[0]}/${1}" ]; then
+
+                for dir in ${smsLogArray[@]}
+                do
+                    gzip -d $dir/${1}/*
+                    sleep 30s
+                done
+
+                echo ""
+                echo "-----------打印${beforeTime}短信日志开始-----------"
+                echo ""
+                # 统计前一天短信日志
+                untarPathPush="${beforeTime}/sms-management_${beforeTime}.1.log"
+                statisticsKeyWords="短信发送成功"
+                logPrintPushAndSms $untarPathPush $statisticsKeyWords "${smsLogArray[@]}"
+                echo ""
+                echo "-----------打印${beforeTime}短信日志结束-----------"
+                echo ""
+
+            else
+                echo "${smsLogArray[0]}/${1} 没有该目录"
+            fi
+        elif [ "$3" == "push" ]; then
+            if [ -d "${pushKafkaLogArray[0]}/${1}" ]; then
+                for dir in ${pushKafkaLogArray[@]}
+                do
+                    gzip -d $dir/${1}/*
+                    sleep 30s
+                done
+
+                echo ""
+                echo "-----------打印${beforeTime}推送日志开始-----------"
+                echo ""
+                # 统计前一天推送日志
+                untarPathPush="${beforeTime}/push-kafka_${beforeTime}.1.log"
+                statisticsKeyWords="推送callId"
+                logPrintPushAndSms $untarPathPush $statisticsKeyWords "${pushKafkaLogArray[@]}"
+                echo ""
+                echo "-----------打印${beforeTime}推送日志结束-----------"
+                echo ""
+
+            else
+                echo "${pushKafkaLogArray[0]}/${1} 没有该目录"
+            fi
+        else
+            echo "输入的服务名称有误，脚本退出"
+            exit 1
+        fi
+    else
+        echo "输入的解压类型有误，脚本退出"
+        exit 1
+    fi
+}
+
 
 for i in ${!thread[@]}
 do
@@ -370,7 +410,7 @@ do
 
     while true
     do
-        jmeter_PID=`ps -ef | grep /data/dengyuanjing/jmeter/apache-jmeter-5.5/bin/jmeter.sh | grep -v grep | awk '{print $2}'`
+        jmeter_PID=`ps -ef | grep $jmeterPath/apache-jmeter-5.5/bin/jmeter.sh | grep -v grep | awk '{print $2}'`
 
         if [ -n "$jmeter_PID" ]; then
 
@@ -432,62 +472,36 @@ do
         untar $beforeTime gzip push
         # 解压短信日志
         untar $beforeTime gzip sms
-
-        # 统计前一天日志
-        untarPathADBM="untar/al_db_dm_${beforeTime}/logs/al_db_dm_${beforeTime}_1.log"
-        untarPathDM="untar/al_dm_${beforeTime}/logs/al_dm_${beforeTime}_1.log"
-        logPrintAudio $untarPathADBM $untarPathDM
-
-        # 统计前一天推送日志
-        untarPathPush="${beforeTime}/push-kafka_${beforeTime}.1.log"
-        statisticsKeyWords="推送callId"
-        logPrintPushAndSms $untarPathPush $statisticsKeyWords
-
-        # 统计前一天短信日志
-        untarPathPush="${beforeTime}/sms-management_${beforeTime}.1.log"
-        statisticsKeyWords="短信发送成功"
-        logPrintPushAndSms $untarPathPush $statisticsKeyWords
-        
     fi
 
     # 打印统计日志
-    # 小程序日志
     
+    echo "" 
+    echo "-----------打印${beforeTime}当天日志开始-----------"
+    echo ""
+    
+    # 小程序日志
+    echo "打印小程序日志"
     pathADBM="al_db_dm.log"
     pathADM="al_dm.log"
     logPrintAudio $pathADBM $pathADM
 
     # 打印推送日志
+    echo "打印推送日志"
     untarPathPush="push-kafka.log"
     statisticsKeyWords="推送callId"
-    logPrintPushAndSms $untarPathPush $statisticsKeyWords
+    logPrintPushAndSms $untarPathPush $statisticsKeyWords "${pushKafkaLogArray[@]}"
 
     # 打印短信日志
+    echo "打印短信日志"
     untarPathPush="sms-management.log"
     statisticsKeyWords="推送callId"
-    logPrintPushAndSms $untarPathPush $statisticsKeyWords
+    logPrintPushAndSms $untarPathPush $statisticsKeyWords "${smsLogArray[@]}"
+
+    echo ""
+    echo "-----------打印${beforeTime}当天日志结束-----------"
+    echo ""
        
-    # cp $smsLogPath/sms-management.log $smsLogPath/sms-management.log_{$current_time}_bak
-    # echo -n "sms_1 Error 数量是: " && cat $smsLogPath/sms-management.log_{$current_time}_bak | grep -ai "error" | wc -l
-    # # 由于短信日志过大会切分日志，测试请将默认100M改大
-    # sms_1=`cat $smsLogPath/sms-management.log_{$current_time}_bak | grep "短信发送成功" | wc -l`
-    # echo -n "sms_1 入库数量是: " && echo "$sms_1"
-    # echo -n "sms_1 最后一条数据的入库时间是: " && cat $smsLogPath/sms-management.log_{$current_time}_bak | grep "短信发送成功" | tail -1 | awk -F '[' '{print $1,$2}' | awk -F ']' '{print $1,$2}'
-
-    # echo ""
-
-    # cp $sms_1_LogPath/sms-management.log $sms_1_LogPath/sms-management.log_{$current_time}_bak
-    # echo -n "sms_2 Error 数量是: " && cat $sms_1_LogPath/sms-management.log_{$current_time}_bak | grep -ai "error" | wc -l
-    # # 由于短信日志过大会切分日志，测试请将默认100M改大
-    # sms_2=`cat $sms_1_LogPath/sms-management.log_{$current_time}_bak | grep "短信发送成功" | wc -l`
-    # echo -n "sms_2 入库数量是: " && echo "$sms_2"
-    # echo -n "sms_2 最后一条数据的入库时间是: " && cat $sms_1_LogPath/sms-management.log_{$current_time}_bak | grep "短信发送成功" | tail -1 | awk -F '[' '{print $1,$2}' | awk -F ']' '{print $1,$2}'
-
-    # echo ""
-    # echo "短信入库总数量是：$(($sms_1+$sms_2))"
-    # echo ""
-
-
     #End_time=`date "+%Y-%m-%d_%H_%M_%S"`
     echo "结束时间为：$stressEndTime" 
     echo ""
