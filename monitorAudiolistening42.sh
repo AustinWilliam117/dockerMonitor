@@ -406,8 +406,6 @@ do
 
     nohup sh $jmeterStartPath/jmeter.sh -n -t $jmeterCreatePath/$jmeterFile -l $jmeterCreatePath/500.jtl -e -o $jmeterCreatePath/${current_time}_msgReport_${thread[i]} > $jmeterCreatePath/stressTest.log 2>& 1 &
 
-    afterTime=`date "+%Y%m%d"`
-
     while true
     do
         jmeter_PID=`ps -ef | grep $jmeterPath/apache-jmeter-5.5/bin/jmeter.sh | grep -v grep | awk '{print $2}'`
@@ -455,6 +453,7 @@ do
     echo ""
     echo ""
 
+    afterTime=`date "+%Y%m%d"`
     #cat /usr/local/audiolistening/logs/audiolistening_db_dm.log | grep -ai "error" >> $logFile/{$current_time}/log/error.log
 
     python3 calc.py $logFile/{$current_time}/ $jmeterCreatePath/${current_time}_msgReport_${thread[i]}/statistics.json
