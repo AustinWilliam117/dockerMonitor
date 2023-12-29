@@ -5,16 +5,16 @@
 
 #-----------------配置项-----------------
 #jmeterFile=zyzx_audio_2_2.jmx				#jmeter文件
-jmeterFile=zyzx_yc_7.jmx				#jmeter文件
+jmeterFile=zyzx_yc_42s.jmx				#jmeter文件
 #jmeterFile=zyzx_audio_nlp1.jmx				#jmeter文件
 
-thread=(4)						#并发数
+thread=(40)						#并发数
 #thread=(8)						#并发数
 
 stressProt=9090					#压测端口 9800/9802 为单小程序, 9090为多实例
 
 # 43200=12小时，21600=6小时，86400=24小时，259200=3天，14400=4小时
-duration=120					#循环持续时间（该版本为永久循环版本）
+duration=72000					#循环持续时间（该版本为永久循环版本）
 
 ramp_time=1						#花费多久的时间启动全部的线程
 
@@ -46,6 +46,7 @@ pushKafka_1_LogPath=$basePath/push-kafka/pushKafka_2/logs
 
 # 要打印的小程序日志
 audioLogArray=("$AUDIO1log_path" "$AUDIO2log_path" "$AUDIO3log_path" "$AUDIO4log_path" "$AUDIO5log_path")
+#audioLogArray=("$AUDIO1log_path" "$AUDIO2log_path")
 # 要打印推送日志
 pushKafkaLogArray=("$pushKafkaLogPath" "$pushKafka_1_LogPath")
 # 要打印短信日志
@@ -65,19 +66,19 @@ jmeterStartPath=$jmeterPath/apache-jmeter-5.5/bin
 log_statistics() {
     echo "-------------------"
     # 需要备份的日志文件
-    # cp $AUDIOlog_path/al_db_dm.log $AUDIOlog_path/al_db_dm.log_{$current_time}_bak
+    # cp $AUDIOlog_path/al_db_dm.log $AUDIOlog_path/al_db_dm.log_${current_time}_bak
     cp $1 ${1}_${current_time}_bak
     # 打印日志中错误的数量
-    # echo -n "audioListening al_db_dm.log Error 数量是: " && cat $AUDIOlog_path/al_db_dm.log_{$current_time}_bak | grep -ai "error" | wc -l
+    # echo -n "audioListening al_db_dm.log Error 数量是: " && cat $AUDIOlog_path/al_db_dm.log_${current_time}_bak | grep -ai "error" | wc -l
     echo -n "$1 Error 数量是: " && cat ${1}_${current_time}_bak | grep "ERROR" | wc -l
     # 是否需要打印日志中完成的数量，需要的话，传入完成的关键字
-    # audioNum=`cat $AUDIOlog_path/al_db_dm.log_{$current_time}_bak | grep "入库完成" | wc -l`
+    # audioNum=`cat $AUDIOlog_path/al_db_dm.log_${current_time}_bak | grep "入库完成" | wc -l`
     # echo -n "audioListening 入库数量是: " && echo "$audioNum"
     if [ $2 == 'y' ]; then
         countNum=`cat $1_${current_time}_bak | grep "$3" | wc -l`
         echo -n "$1 入库数量是: " && echo "$countNum"
         # 统计最后一条日志的时间
-        # echo -n "audioListening 最后一条数据入库时间是: " && cat $AUDIOlog_path/al_db_dm.log_{$current_time}_bak | grep "整通通话入库完成" | tail -1 | awk '{print $1,$2}'
+        # echo -n "audioListening 最后一条数据入库时间是: " && cat $AUDIOlog_path/al_db_dm.log_${current_time}_bak | grep "整通通话入库完成" | tail -1 | awk '{print $1,$2}'
         echo -n "$1 最后一条数据入库时间是: " && cat ${1}_${current_time}_bak | grep "$3" | tail -1 | awk '{print $1,$2}'
         #return $countNum
     fi
@@ -315,8 +316,8 @@ do
     echo "并发数：${thread[$i]}"
     echo "jmeter执行时间为: $duration"
 
-    mkdir $logFile/{$current_time}/
-    mkdir $logFile/{$current_time}/log
+    mkdir $logFile/${current_time}/
+    mkdir $logFile/${current_time}/log
 
     # 检测小程序、DM、NLU Prot是否存在
     for portSN in ${!Ports[@]}
@@ -402,10 +403,11 @@ do
     #nohup sh $monitorCalc/calc_42.sh > $monitorCalc/monitorCalc_${thread[i]}.log 2>& 1 &
 
     # 获取jmeter压测日志文件stressTest文件中的开始时间
-    stressStartTime=`cat stressTest.log | grep "Start" | head -1 | awk '{print $5,$6,$7,$8}'`
+    stressStartTime=`cat $jmeterPath/stressTest.log | grep "Start" | head -1 | awk '{print $5,$6,$7,$8}'`
     echo "Jmeter开始执行时间 $stressStartTime"
 
     beforeTime=`date "+%Y%m%d"`
+    echo "压测开始时间beforeTime: $beforeTime"
 
     nohup sh $jmeterStartPath/jmeter.sh -n -t $jmeterCreatePath/$jmeterFile -l $jmeterCreatePath/500.jtl -e -o $jmeterCreatePath/${current_time}_msgReport_${thread[i]} > $jmeterCreatePath/stressTest.log 2>& 1 &
 
@@ -419,25 +421,25 @@ do
             # 监控所有程序的内存和CPU
             #for j in ${!newDockerNames[@]}
             #do
-            #    top -n 1 -b | grep ${newPIDs[$j]} | awk '{print $10}' >> $logFile/{$current_time}/${newDockerNames[$j]}_Mem.txt
-            #    top -n 1 -b | grep ${newPIDs[$j]} | awk '{print $9}' >> $logFile/{$current_time}/${newDockerNames[$j]}_Cpu.txt
+            #    top -n 1 -b | grep ${newPIDs[$j]} | awk '{print $10}' >> $logFile/${current_time}/${newDockerNames[$j]}_Mem.txt
+            #    top -n 1 -b | grep ${newPIDs[$j]} | awk '{print $9}' >> $logFile/${current_time}/${newDockerNames[$j]}_Cpu.txt
             #done
             
             # 监控所有程序的连接数
             for dockerNameSN in ${!newDockerNames[@]}
             do
-                netstat -antp | grep ${newPorts[$dockerNameSN]} | grep -v "LISTEN" | grep "ESTABLISHED" | wc -l >> $logFile/{$current_time}/${newDockerNames[$dockerNameSN]}_ESTABLISHED.txt
-                netstat -antp | grep -v "LISTEN" | grep ${newPorts[$dockerNameSN]} | grep "TIME_WAIT" | wc -l >> $logFile/{$current_time}/${newDockerNames[$dockerNameSN]}_TIMEWAIT.txt
+                netstat -antp | grep ${newPorts[$dockerNameSN]} | grep -v "LISTEN" | grep "ESTABLISHED" | wc -l >> $logFile/${current_time}/${newDockerNames[$dockerNameSN]}_ESTABLISHED.txt
+                netstat -antp | grep -v "LISTEN" | grep ${newPorts[$dockerNameSN]} | grep "TIME_WAIT" | wc -l >> $logFile/${current_time}/${newDockerNames[$dockerNameSN]}_TIMEWAIT.txt
             done
  
             # top 总cpu
-            top -n 1 -b | grep "%Cpu(s)" | awk '{print $2}' >> $logFile/{$current_time}/CPU.txt
+            top -n 1 -b | grep "%Cpu(s)" | awk '{print $2}' >> $logFile/${current_time}/CPU.txt
 
             # top 总内存
-            # top -n 1 -b | grep "KiB Mem"| awk '{print $7}' >> $logFile/{$current_time}/MEM.txt
-            free -k | grep "Mem" | awk '{print $3}' | grep -o '^[0-9]\+' >> $logFile/{$current_time}/MEM.txt                
+            # top -n 1 -b | grep "KiB Mem"| awk '{print $7}' >> $logFile/${current_time}/MEM.txt
+            free -k | grep "Mem" | awk '{print $3}' | grep -o '^[0-9]\+' >> $logFile/${current_time}/MEM.txt                
 
-            top -b -n  1 | grep load | awk -F ':' '{print $5}' | awk '{print $2}' | awk -F ',' '{print $1}' >> $logFile/{$current_time}/loadAverage.txt
+            top -b -n  1 | grep load | awk -F ':' '{print $5}' | awk '{print $2}' | awk -F ',' '{print $1}' >> $logFile/${current_time}/loadAverage.txt
 
             sleep 30s
 
@@ -445,7 +447,7 @@ do
             # End_time=`date "+%Y-%m-%d_%H_%M_%S"`
             # 获取jmeter压测文件stressTest的结束时间
             sleep 0.5s
-            stressEndTime=`cat stressTest.log | grep "Tidying up" | head -1 | awk '{print $5,$6,$7,$8}'`
+            stressEndTime=`cat $jmeterPath/stressTest.log | grep "Tidying up" | head -1 | awk '{print $5,$6,$7,$8}'`
             echo "$stressEndTime 监控结束，正在统计..."
             break
         fi
@@ -457,12 +459,14 @@ do
     echo ""
     echo ""
 
+    #cat /usr/local/audiolistening/logs/audiolistening_db_dm.log | grep -ai "error" >> $logFile/${current_time}/log/error.log
+
     afterTime=`date "+%Y%m%d"`
-    #cat /usr/local/audiolistening/logs/audiolistening_db_dm.log | grep -ai "error" >> $logFile/{$current_time}/log/error.log
+    echo "压测开始时间afterTime: $afterTime"
 
-    python3 calc.py $logFile/{$current_time}/ $jmeterCreatePath/${current_time}_msgReport_${thread[i]}/statistics.json
+    python3 $jmeterPath/calc.py $logFile/${current_time}/ $jmeterCreatePath/${current_time}_msgReport_${thread[i]}/statistics.json
 
-    cat $logFile/{$current_time}/result.txt
+    cat $logFile/${current_time}/result.txt
 
     echo "压测中会出现超时入库问题，所以等待5分钟后出统计数量"
     sleep 10s

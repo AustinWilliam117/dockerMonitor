@@ -1,4 +1,6 @@
 import math,sys,os,json
+import mysql.connector
+from datetime import datetime
 
 """
     字体颜色
@@ -194,6 +196,41 @@ def printJmeterReslut(jmeterPath):
 
 
     #resultList = printData()
+
+def selectData(databases, tableName):
+    for database in databases:
+        # 建立数据库连接
+        mydb = mysql.connector.connect(
+            host="",
+            port="3307",
+            user="root",
+            password="",
+            database=database
+            #auth_plugin='mysql_native_password'
+        )
+        
+        # 获取当前日期时间并格式化为所需格式
+        current_datetime = datetime.now()
+        today = current_datetime.strftime("%Y-%m-%d 00:00:00")
+
+        # 创建一个 mysql 游标对象，用于执行 sql 查询
+        mycursor = mydb.cursor()
+
+        # 构建带有表名的查询语句
+        query = f"SELECT COUNT(*) FROM {tableName} WHERE start_time >= '{today}'"
+
+        # 执行查询
+        mycursor.execute(query)
+
+        # 获取查询结果
+        result = mycursor.fetchone()
+
+        # 输出结果
+        print(f"{database} 当天查询数据条数为: {result[0]}")
+            
+        # 关闭游标和数据库连接
+        mycursor.close()
+        mydb.close()
  
 if __name__ == '__main__':
     PATH = sys.argv[1]
@@ -218,3 +255,12 @@ if __name__ == '__main__':
     createLog()
     printJmeterReslut(jmeterPath)
     solve()
+
+    # 查询输入库
+    # 获取当前年月，并拼接字符串
+    current_datetime = datetime.now()
+    formatted_datetime = current_datetime.strftime("%Y%m")
+    table = 'al_job_' + formatted_datetime
+    
+    databases = ["aicall_job_42_cd","aicall_job_42_bj","aicall_job_42_xj","aicall_job_42_gx","aicall_job_42_ha"]
+    selectData(databases, table)
